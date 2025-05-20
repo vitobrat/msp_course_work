@@ -1,0 +1,20 @@
+{% extends 'base_with_card.html' %}
+
+{% block card_content %}
+  <h1>Справочник</h1>
+
+  <ul class="list-unstyled bg-light border p-3 rounded">
+    {% for item in results %}
+      <li class="mb-1" style="margin-left: {{ item.level|add:"1" }}em;">
+        {% if item.is_product %}
+          <span class="text-muted">{{ item.id }}. {{ item.name }}</span>
+        {% else %}
+          <strong>{{ item.id }}. {{ item.name }}</strong>
+        {% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+
+  <br>
+  <a href="{% url 'django_db_app:index' %}" class="btn btn-secondary mb-2">На главную</a>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base_with_card.html' %}
+
+{% block card_content %}
+  <h1>Выберите продукт</h1>
+
+  <form method="get">
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Показать параметры</button>
+  </form>
+
+  {% if results %}
+    {% if product %}
+      <h2 class="mt-4">Параметры продукта: {{ product.name }}</h2>
+
+      {% if params %}
+        <table class="table table-bordered mt-4">
+          <thead>
+          <tr>
+            <th>Параметр</th>
+            <th>Краткое название</th>
+            <th>Тип данных</th>
+            <th>Значение</th>
+            <th>Единица измерения</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for param in params %}
+            <tr>
+              <td>{{ param.param.name }}</td>
+              <td>{{ param.param.name_short }}</td>
+              <td>{{ param.param.get_data_type_display }}</td>
+              <td>
+                {% if param.value_enum %}
+                  {% if param.value_enum.value_str %}
+                    {{ param.value_enum.value_str }}
+                  {% else %}
+                    (enum: {{ param.value_enum.code }})
+                  {% endif %}
+                {% elif param.value_str %}
+                  {{ param.value_str }}
+                {% elif param.value_int %}
+                  {{ param.value_int }}
+                {% elif param.value_real %}
+                  {{ param.value_real }}
+                {% elif param.value_path %}
+                  {{ param.value_path }}
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+              <td>
+                {% if param.param.measure %}
+                  {{ param.param.measure.name_short }}
+                {% else %}
+                  -
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p class="mt-3">Параметры для выбранного продукта не найдены.</p>
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  
+  <br>
+  <a href="{% url 'django_db_app:index' %}" class="btn btn-secondary mb-2">На главную</a>
+{% endblock %}

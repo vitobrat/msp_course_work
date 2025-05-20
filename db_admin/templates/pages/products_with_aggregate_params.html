@@ -1,0 +1,49 @@
+{% extends 'base_with_card.html' %}
+
+{% block card_content %}
+  <h1>Продукты с агрегацией параметров</h1>
+
+  <!-- Форма для ввода родительского параметра -->
+  <form method="get">
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Поиск</button>
+  </form>
+
+  {% if results %}
+    {% if aggregate_params %}
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Категория</th>
+          <th>Продукт</th>
+          <th>Цена</th>
+          <th>Количество</th>
+          <th>Параметр</th>
+          <th>Тип</th>
+          <th>Значение</th>
+          <th>Единица измерения</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for param in aggregate_params %}
+          <tr>
+            <td>{{ param.category }}</td>
+            <td>{{ param.product }}</td>
+            <td>{{ param.price }}</td>
+            <td>{{ param.amount }}</td>
+            <td>{{ param.param_name }}</td>
+            <td>{{ param.param_type }}</td>
+            <td>{{ param.param_value }}</td>
+            <td>{{ param.param_measure }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>Нет данных для отображения.</p>
+    {% endif %}
+  {% endif %}
+  
+  <br>
+  <a href="{% url 'django_db_app:index' %}" class="btn btn-secondary mb-2">На главную</a>
+{% endblock %}

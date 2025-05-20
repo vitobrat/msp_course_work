@@ -1,0 +1,44 @@
+{% extends 'base_with_card.html' %}
+
+{% block card_content %}
+  <h1>Родительские категории для: {{ selected_category.name }}</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Показать</button>
+  </form>
+
+  {% if results %}
+    {% if parent_categories %}
+      <h2>Родительские категории</h2>
+      <table class="table table-bordered mt-4">
+        <thead>
+        <tr>
+          <th>Уровень</th>
+          <th>ID</th>
+          <th>Имя</th>
+          <th>Родитель</th>
+          <th>Ед. изм.</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for parent in parent_categories %}
+          <tr>
+            <td>{{ parent.depth }}</td>
+            <td>{{ parent.id }}</td>
+            <td>{{ parent.name }}</td>
+            <td>{{ parent.parent_id }}</td>
+            <td>{{ parent.measure_id }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p>Нет родительских категорий (выбран корень).</p>
+    {% endif %}
+  {% endif %}
+  
+  <br>
+  <a href="{% url 'django_db_app:index' %}" class="btn btn-secondary mb-2">На главную</a>
+{% endblock %}
