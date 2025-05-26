@@ -2,42 +2,39 @@
 
 {% block card_content %}
   <h1>Все продукты и их параметры</h1>
-
-  <table class="table table-bordered mt-4">
-    <thead>
-    <tr>
-      <th>Категория</th>
-      <th>Продукт</th>
-      <th>Количество</th>
-      <th>Единица измерения</th>
-      <th>Цена</th>
-      <th>Параметр</th>
-      <th>Значение параметра</th>
-      <th>Единица измерения параметра</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% if results %}
-      {% for result in results %}
-        <tr>
-          <td>{{ result.category }}</td>
-          <td>{{ result.product }}</td>
-          <td>{{ result.amount }}</td>
-          <td>{{ result.measure }}</td>
-          <td>{{ result.price }}</td>
-          <td>{{ result.param_name }}</td>
-          <td>{{ result.param_value }}</td>
-          <td>{{ result.param_measure }}</td>
-        </tr>
-      {% endfor %}
-    {% else %}
+  <div style="overflow-x:auto;">
+    <table>
+      <thead>
       <tr>
-        <td colspan="8">Нет данных для отображения.</td>
+        <th>Категория</th>
+        <th>Продукт</th>
+        <th>Кол-во</th>
+        <th>Ед. изм.</th>
+        <th>Цена</th>
+        <th>Параметр</th>
+        <th>Значение</th>
+        <th>Ед. изм. параметра</th>
       </tr>
-    {% endif %}
-    </tbody>
-  </table>
-  
-  <br>
-  <a href="{% url 'django_db_app:index' %}" class="btn btn-secondary mb-2">На главную</a>
+      </thead>
+      <tbody>
+      {% if results %}
+        {% for result in results %}
+          <tr>
+            <td>{{ result.category }}</td>
+            <td>{{ result.product }}</td>
+            <td>{{ result.amount }}</td>
+            <td>{{ result.measure }}</td>
+            <td>{{ result.price }}</td>
+            <td>{{ result.param_name }}</td>
+            <td>{{ result.param_value }}</td>
+            <td>{{ result.param_measure }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr><td colspan="8" class="text-gray">Нет данных для отображения.</td></tr>
+      {% endif %}
+      </tbody>
+    </table>
+  </div>
+  <a href="{% url 'django_db_app:index' %}" class="btn-custom mt-3">На главную</a>
 {% endblock %}

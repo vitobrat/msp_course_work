@@ -1,24 +1,20 @@
 {% extends 'base_with_card.html' %}
 
 {% block card_content %}
-  <h1>Терминальные категории для: {{ selected_category.name }}</h1>
-
-  <form method="post" class="mt-3">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Показать</button>
+  <h1>Терминальные категории:<br><span class="text-gray">{{ selected_category.name }}</span></h1>
+  <form method="post">{% csrf_token %}{{ form.as_p }}
+    <button type="submit" class="btn-custom btn-accent">Показать</button>
   </form>
-
   {% if results %}
     {% if terminal_categories %}
-      <h2 class="mt-4">Найденные терминальные категории</h2>
-      <table class="table table-bordered mt-2">
+      <h2 class="mt-3">Список терминальных</h2>
+      <table>
         <thead>
         <tr>
           <th>ID</th>
           <th>Название</th>
           <th>Родитель</th>
-          <th>Ед. измерения</th>
+          <th>Ед. изм.</th>
           <th>Глубина</th>
         </tr>
         </thead>
@@ -35,10 +31,8 @@
         </tbody>
       </table>
     {% else %}
-      <p class="mt-4">Нет терминальных категорий для выбранной категории.</p>
+      <div class="text-gray mt-3">Нет терминальных категорий для категории.</div>
     {% endif %}
   {% endif %}
-  
-  <br>
-  <a href="{% url 'django_db_app:index' %}" class="btn btn-secondary mb-2">На главную</a>
+  <a href="{% url 'django_db_app:index' %}" class="btn-custom mt-3">На главную</a>
 {% endblock %}

@@ -1,28 +1,24 @@
 {% extends 'base_with_card.html' %}
 
 {% block card_content %}
-  <h1>Изделия и параметры по категории: {{ selected_category.name }}</h1>
-
-  <form method="post" class="mb-4">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Показать</button>
+  <h1>Изделия в категории:<br><span class="text-gray">{{ selected_category.name }}</span></h1>
+  <form method="post">{% csrf_token %}{{ form.as_p }}
+    <button type="submit" class="btn-custom btn-accent">Показать</button>
   </form>
-
   {% if results %}
     {% if products %}
-      <table class="table table-bordered table-striped">
+      <table>
         <thead>
         <tr>
           <th>Категория</th>
           <th>Изделие</th>
-          <th>Количество</th>
+          <th>Кол-во</th>
           <th>Ед. изм.</th>
           <th>Цена</th>
           <th>Параметр</th>
           <th>Тип</th>
           <th>Значение</th>
-          <th>Ед. изм. параметра</th>
+          <th>Ед. параметра</th>
         </tr>
         </thead>
         <tbody>
@@ -42,10 +38,8 @@
         </tbody>
       </table>
     {% else %}
-      <p>Нет данных для отображения.</p>
+      <div class="text-gray">Нет данных для отображения.</div>
     {% endif %}
   {% endif %}
-  
-  <br>
-  <a href="{% url 'django_db_app:index' %}" class="btn btn-secondary mb-2">На главную</a>
+  <a href="{% url 'django_db_app:index' %}" class="btn-custom mt-3">На главную</a>
 {% endblock %}

@@ -1,23 +1,18 @@
 {% extends 'base_with_card.html' %}
 
 {% block card_content %}
-  <h1>Дочерние элементы для категории: {{ selected_category.name }}</h1>
-
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Показать</button>
+  <h1>Дочерние элементы:<br><span class="text-gray">{{ selected_category.name }}</span></h1>
+  <form method="post">{% csrf_token %}{{ form.as_p }}
+    <button type="submit" class="btn-custom btn-accent">Показать</button>
   </form>
 
   {% if results %}
     {% if descendant_categories %}
-      <h2>Дочерние категории</h2>
-      <table class="table table-bordered mt-4">
+      <h2>Категории</h2>
+      <table>
         <thead>
         <tr>
-          <th>ID</th>
-          <th>Имя</th>
-          <th>Родитель</th>
+          <th>ID</th><th>Имя</th><th>Родитель</th>
         </tr>
         </thead>
         <tbody>
@@ -31,19 +26,13 @@
         </tbody>
       </table>
     {% else %}
-      <p>Нет дочерних категорий.</p>
+      <div class="text-gray mb-2">Нет дочерних категорий.</div>
     {% endif %}
 
     {% if descendant_products %}
-      <h2>Продукты</h2>
-      <table class="table table-bordered mt-4">
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Имя</th>
-          <th>Категория</th>
-        </tr>
-        </thead>
+      <h2 class="mt-4">Продукты</h2>
+      <table>
+        <thead><tr><th>ID</th><th>Имя</th><th>Категория</th></tr></thead>
         <tbody>
         {% for product in descendant_products %}
           <tr>
@@ -55,10 +44,8 @@
         </tbody>
       </table>
     {% else %}
-      <p>Нет изделий в выбранной категории.</p>
+      <span class="text-gray mb-2">Нет изделий в выбранной категории.</span>
     {% endif %}
   {% endif %}
-
-  <br>
-  <a href="{% url 'django_db_app:index' %}" class="btn btn-secondary mb-2">На главную</a>
+  <a href="{% url 'django_db_app:index' %}" class="btn-custom mt-3">На главную</a>
 {% endblock %}
